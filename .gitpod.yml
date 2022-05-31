@@ -9,11 +9,11 @@ tasks:
     init: |
       ddev debug download-images
       ddev composer install
-      ddev drush si demo_umami -y
+      ddev drush si -y --account-pass=admin --site-name="DrupalPod" demo_umami
     command: |
       echo y | ddev start
       if [ -n "$DP_INSTALL_PROFILE" ]; then
-        ddev drush si "$DP_INSTALL_PROFILE" -y
+        ddev drush si -y --account-pass=admin --site-name="DrupalPod" "$DP_INSTALL_PROFILE"
       fi
       gp preview $(gp url 8080)
 
