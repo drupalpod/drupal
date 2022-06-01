@@ -12,9 +12,12 @@ tasks:
       ddev drush si -y --account-pass=admin --site-name="DrupalPod" demo_umami
     command: |
       echo y | ddev start
-      if [ -n "$DP_INSTALL_PROFILE" ]; then
+
+      # Skip setup if it already ran once and if no specific install profile was requested
+      if [ ! -f /workspace/.drupalpod_initiated ] && [ -n "$DP_INSTALL_PROFILE" ]; then
         ddev drush si -y --account-pass=admin --site-name="DrupalPod" "$DP_INSTALL_PROFILE"
       fi
+      touch /workspace/.drupalpod_initiated
       gp preview $(gp url 8080)
 
 # VScode xdebug extension
